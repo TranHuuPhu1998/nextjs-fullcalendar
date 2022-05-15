@@ -4,14 +4,15 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
 import React, { useEffect, useState } from "react";
+import "../styles/Home.module.css";
 
 const initState = {
   weekendsVisible: true,
   externalEvents: [
-    { title: "Art 1", color: "#0097a7", id: 34432, custom: "edit 1" },
-    { title: "Art 2", color: "#f44336", id: 323232, custom: "vuejs" },
-    { title: "Art 3", color: "#f57f17", id: 1111, custom: "reactjs" },
-    { title: "Art 4", color: "#90a4ae", id: 432432, custom: "angularjs" },
+    { title: "Art 1", color: "#0097a7", id: 34432, custom: "fdsfdsfds" },
+    { title: "Art 2", color: "#f44336", id: 323232 },
+    { title: "Art 3", color: "#f57f17", id: 1111 },
+    { title: "Art 4", color: "#90a4ae", id: 432432 },
   ],
   calendarEvents: [
     {
@@ -91,7 +92,7 @@ const Home: NextPage = () => {
     setState((state: any) => {
       return {
         ...state,
-        calendarEvents: [newEvent, ...state.calendarEvents],
+        calendarEvents: [newEvent],
       };
     });
   };
@@ -110,7 +111,7 @@ const Home: NextPage = () => {
         <div id="external-events">
           {state.externalEvents.map((event: any) => (
             <div
-              className="fc-event fc-h-event mb-1 fc-daygrid-event fc-daygrid-block-event p-2 m-2"
+              className="fc-event fc-h-event mb-1 fc-daygrid-event fc-daygrid-block-event p-2"
               title={event.title}
               data-id={event.id}
               data-color={event.color}

@@ -4,6 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
 import React, { useEffect, useState } from "react";
+import "../styles/Home.module.css";
 
 const initState = {
   weekendsVisible: true,
@@ -110,7 +111,7 @@ const Home: NextPage = () => {
         <div id="external-events">
           {state.externalEvents.map((event: any) => (
             <div
-              className="fc-event fc-h-event mb-1 fc-daygrid-event fc-daygrid-block-event p-2 m-2"
+              className="fc-event fc-h-event mb-1 fc-daygrid-event fc-daygrid-block-event p-2"
               title={event.title}
               data-id={event.id}
               data-color={event.color}

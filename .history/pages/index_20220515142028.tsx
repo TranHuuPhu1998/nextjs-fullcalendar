@@ -2,46 +2,67 @@ import type { NextPage } from "next";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
-import React, { useEffect, useState } from "react";
+import interactionPlugin from "@fullcalendar/interaction";
+import React, { useEffect } from "react";
+import "../styles/Home.module.css";
 
 const initState = {
-  weekendsVisible: true,
-  externalEvents: [
-    { title: "Art 1", color: "#0097a7", id: 34432, custom: "edit 1" },
-    { title: "Art 2", color: "#f44336", id: 323232, custom: "vuejs" },
-    { title: "Art 3", color: "#f57f17", id: 1111, custom: "reactjs" },
-    { title: "Art 4", color: "#90a4ae", id: 432432, custom: "angularjs" },
-  ],
   calendarEvents: [
     {
-      id: 1,
-      title: "All-day event",
-      color: "#388e3c",
-      start: "2020-12-12",
-      end: "2020-12-12",
-      custom: "questo è un campo custom",
+      title: "Atlanta Monster",
+      start: new Date("2019-04-04 00:00"),
+      id: "99999998",
     },
     {
-      id: 2,
-      title: "Timed event",
-      color: "#0097a7",
-      start: "2020-12-07",
-      end: "2020-12-10",
-      custom: "custom stuff",
+      title: "My Favorite Murder",
+      start: new Date("2019-04-05 00:00"),
+      id: "99999999",
     },
+  ],
+  events: [
+    { title: "Event 1", id: "1", start: new Date() },
+    { title: "Event 2", id: "2", start: new Date() },
+    { title: "Event 3", id: "3", start: new Date() },
+    { title: "Event 4", id: "4", start: new Date() },
+    { title: "Event 5", id: "5", start: new Date() },
   ],
 };
 
 const Home: NextPage = () => {
-  const [state, setState] = useState(initState);
+  const [state, setState] = useState({
+    weekendsVisible: true,
+    externalEvents: [
+      { title: "Art 1", color: "#0097a7", id: 34432, custom: "fdsfdsfds" },
+      { title: "Art 2", color: "#f44336", id: 323232 },
+      { title: "Art 3", color: "#f57f17", id: 1111 },
+      { title: "Art 4", color: "#90a4ae", id: 432432 }
+    ],
+    calendarEvents: [
+      {
+        id: 1,
+        title: "All-day event",
+        color: "#388e3c",
+        start: "2020-12-12",
+        end: "2020-12-12",
+        custom: "questo è un campo custom"
+      },
+      {
+        id: 2,
+        title: "Timed event",
+        color: "#0097a7",
+        start: "2020-12-07",
+        end: "2020-12-10",
+        custom: "custom stuff"
+      }
+    ]
+  });
 
   // load external events
   useEffect(() => {
     let draggableEl = document.getElementById("external-events");
-    new Draggable(draggableEl as any, {
+    new Draggable(draggableEl, {
       itemSelector: ".fc-event",
-      eventData: function (eventEl: any) {
+      eventData: function (eventEl) {
         let id = eventEl.dataset.id;
         let title = eventEl.getAttribute("title");
         let color = eventEl.dataset.color;
@@ -52,11 +73,11 @@ const Home: NextPage = () => {
           title: title,
           color: color,
           custom: custom,
-          create: true,
+          create: true
         };
-      },
+      }
     });
-  }, []);
+  });
 
   // add external events
   const addEvent = () => {
@@ -66,32 +87,32 @@ const Home: NextPage = () => {
       color: "#333333",
       start: "2020-12-31",
       end: "2020-12-31",
-      custom: "custom stuff",
+      custom: "custom stuff"
     };
 
-    setState((state: any) => {
+    setState((state) => {
       return {
         ...state,
-        externalEvents: state.externalEvents.concat(newEvent),
+        externalEvents: state.externalEvents.concat(newEvent)
       };
     });
   };
 
   // handle event receive
-  const handleEventReceive = (eventInfo: any) => {
+  const handleEventReceive = (eventInfo) => {
     const newEvent = {
       id: eventInfo.draggedEl.getAttribute("data-id"),
       title: eventInfo.draggedEl.getAttribute("title"),
       color: eventInfo.draggedEl.getAttribute("data-color"),
       start: eventInfo.date,
       end: eventInfo.date,
-      custom: eventInfo.draggedEl.getAttribute("data-custom"),
+      custom: eventInfo.draggedEl.getAttribute("data-custom")
     };
 
-    setState((state: any) => {
+    setState((state) => {
       return {
         ...state,
-        calendarEvents: [newEvent, ...state.calendarEvents],
+        calendarEvents: state.calendarEvents.concat(newEvent)
       };
     });
   };
@@ -108,9 +129,9 @@ const Home: NextPage = () => {
           />
         </div>
         <div id="external-events">
-          {state.externalEvents.map((event: any) => (
+          {state.externalEvents.map((event:any) => (
             <div
-              className="fc-event fc-h-event mb-1 fc-daygrid-event fc-daygrid-block-event p-2 m-2"
+              className="fc-event fc-h-event mb-1 fc-daygrid-event fc-daygrid-block-event p-2"
               title={event.title}
               data-id={event.id}
               data-color={event.color}
@@ -119,7 +140,7 @@ const Home: NextPage = () => {
               style={{
                 backgroundColor: event.color,
                 borderColor: event.color,
-                cursor: "pointer",
+                cursor: "pointer"
               }}
             >
               <div className="fc-event-main">
@@ -138,7 +159,7 @@ const Home: NextPage = () => {
           headerToolbar={{
             left: "prev,next today",
             center: "title",
-            right: "dayGridMonth,timeGridWeek,timeGridDay",
+            right: "dayGridMonth,timeGridWeek,timeGridDay"
           }}
           initialView="dayGridMonth"
           editable={true}
@@ -146,13 +167,15 @@ const Home: NextPage = () => {
           selectMirror={true}
           dayMaxEvents={true}
           weekends={state.weekendsVisible}
-          events={state.calendarEvents as any}
+          events={state.calendarEvents}
           droppable={true}
           eventReceive={handleEventReceive}
         />
       </div>
     </div>
   );
+}
+
 };
 
 export default Home;

@@ -4,6 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
 import React, { useEffect, useState } from "react";
+import "../styles/Home.module.css";
 
 const initState = {
   weekendsVisible: true,
